@@ -1,4 +1,4 @@
-package harry
+package hw01
 
 const size = 25
 
