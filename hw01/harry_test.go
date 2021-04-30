@@ -51,6 +51,30 @@ func TestHarry(t *testing.T) {
 				return x < 10 || y < 10
 			},
 		},
+		{
+			filename: "07.txt",
+			predicate: func(x, y int) bool {
+				return (size-x) < 10 && (size-y) < 10
+			},
+		},
+		{
+			filename: "08.txt",
+			predicate: func(x, y int) bool {
+				return x == 0 || y == 0
+			},
+		},
+		{
+			filename: "09.txt",
+			predicate: func(x, y int) bool {
+				return (x > y+10) || (y > x+10)
+			},
+		},
+		{
+			filename: "10.txt",
+			predicate: func(x, y int) bool {
+				return (x > y) && (x/2 <= y)
+			},
+		},
 	}
 
 	for _, tt := range tests {
