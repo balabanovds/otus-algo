@@ -11,9 +11,9 @@ import (
 
 type stringTest struct{}
 
-func (*stringTest) Run(input []string) string {
+func (*stringTest) Run(input []string) (string, error) {
 	l := len(strings.TrimSpace(input[0]))
-	return strconv.Itoa(l)
+	return strconv.Itoa(l), nil
 }
 
 func (*stringTest) Name() string {

@@ -12,7 +12,7 @@ import (
 
 type TestRunner interface {
 	Name() string
-	Run([]string) string
+	Run([]string) (string, error)
 }
 
 func RunTests(t *testing.T, runner TestRunner, path string) {
@@ -52,7 +52,8 @@ func runTest(t *testing.T, runner TestRunner, inFile string, outFile string) {
 	want := strings.TrimSpace(string(outRaw))
 
 	t0 := time.Now()
-	got := runner.Run(input)
+	got, err := runner.Run(input)
+	fatalOnErr(t, err)
 	t1 := time.Since(t0)
 	t.Logf("execution duration: %s\n", t1)
 
