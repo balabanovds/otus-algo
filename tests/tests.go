@@ -32,7 +32,7 @@ func RunTests(t *testing.T, runner TestRunner, path string) {
 		return nil
 	})
 
-	fatalOnErr(t, err)
+	FatalOnErr(t, err)
 
 	for i := range inFiles {
 		t.Run(runner.Name()+"-"+strconv.Itoa(i), func(t *testing.T) {
@@ -43,17 +43,17 @@ func RunTests(t *testing.T, runner TestRunner, path string) {
 
 func runTest(t *testing.T, runner TestRunner, inFile string, outFile string) {
 	inRaw, err := ioutil.ReadFile(inFile)
-	fatalOnErr(t, err)
+	FatalOnErr(t, err)
 
 	outRaw, err := ioutil.ReadFile(outFile)
-	fatalOnErr(t, err)
+	FatalOnErr(t, err)
 
 	input := strings.Split(string(inRaw), "\n")
 	want := strings.TrimSpace(string(outRaw))
 
 	t0 := time.Now()
 	got, err := runner.Run(input)
-	fatalOnErr(t, err)
+	FatalOnErr(t, err)
 	t1 := time.Since(t0)
 	t.Logf("execution duration: %s\n", t1)
 
@@ -63,7 +63,7 @@ func runTest(t *testing.T, runner TestRunner, inFile string, outFile string) {
 	}
 }
 
-func fatalOnErr(t *testing.T, err error) {
+func FatalOnErr(t *testing.T, err error) {
 	if err != nil {
 		t.Fatal(err)
 	}

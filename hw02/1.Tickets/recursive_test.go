@@ -1,6 +1,7 @@
 package tickets_test
 
 import (
+	"os"
 	"path/filepath"
 	"strconv"
 	"testing"
@@ -20,6 +21,7 @@ func (r *recursiveTest) Name() string {
 func (r *recursiveTest) Run(input []string) (string, error) {
 	var err error
 	r.digitsNum, err = strconv.Atoi(input[0])
+	r.ticketsQuantity = 0
 	if err != nil {
 		return "", err
 	}
@@ -45,5 +47,7 @@ func (r *recursiveTest) nextDigit(digit int, sum1 int, sum2 int) {
 }
 
 func TestLuckyTickets_recursive(t *testing.T) {
-	tests.RunTests(t, &recursiveTest{}, filepath.Dir("."))
+	cwd, err := os.Getwd()
+	tests.FatalOnErr(t, err)
+	tests.RunTests(t, &recursiveTest{}, filepath.Join(cwd, "for_recursive"))
 }
