@@ -57,8 +57,8 @@ func runTest(t *testing.T, runner TestRunner, inFile string, outFile string) {
 	t.Logf("execution duration: %s\n", t1)
 
 	if want != got {
+		t.Errorf("FATAL: want: %q, got: %q", want, got)
 		t.Logf("inFile: %s, outFile: %s\n", inFile, outFile)
-		t.Fatalf("want: %q, got: %q", want, got)
 	}
 }
 
