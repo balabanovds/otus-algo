@@ -35,6 +35,7 @@ func RunTests(t *testing.T, runner TestRunner, path string) {
 	FatalOnErr(t, err)
 
 	for i := range inFiles {
+		i := i
 		t.Run(runner.Name()+"-"+strconv.Itoa(i), func(t *testing.T) {
 			runTest(t, runner, inFiles[i], outFiles[i])
 		})
@@ -48,7 +49,7 @@ func runTest(t *testing.T, runner TestRunner, inFile string, outFile string) {
 	outRaw, err := ioutil.ReadFile(outFile)
 	FatalOnErr(t, err)
 
-	input := strings.Split(string(inRaw), "\n")
+	input := sanitizeClr(strings.Split(string(inRaw), "\n"))
 	want := strings.TrimSpace(string(outRaw))
 
 	t0 := time.Now()
@@ -67,4 +68,12 @@ func FatalOnErr(t *testing.T, err error) {
 	if err != nil {
 		t.Fatal(err)
 	}
+}
+
+func sanitizeClr(in []string) []string {
+	res := make([]string, 0, len(in))
+	for _, v := range in {
+		res = append(res, strings.TrimSpace(v))
+	}
+	return res
 }
