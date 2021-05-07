@@ -49,5 +49,6 @@ func (r *recursiveTest) nextDigit(digit int, sum1 int, sum2 int) {
 func TestLuckyTickets_recursive(t *testing.T) {
 	cwd, err := os.Getwd()
 	tests.FatalOnErr(t, err)
-	tests.RunTests(t, &recursiveTest{}, filepath.Join(cwd, "for_recursive"))
+	cmp := func(a, b string) bool { return a == b }
+	tests.RunTests(t, &recursiveTest{}, filepath.Join(cwd, "for_recursive"), cmp)
 }

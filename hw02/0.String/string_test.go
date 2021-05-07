@@ -21,5 +21,6 @@ func (*stringTest) Name() string {
 }
 
 func TestString(t *testing.T) {
-	tests.RunTests(t, &stringTest{}, filepath.Dir("."))
+	cmp := func(a, b string) bool { return a == b }
+	tests.RunTests(t, &stringTest{}, filepath.Dir("."), cmp)
 }

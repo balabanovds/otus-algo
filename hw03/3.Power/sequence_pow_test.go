@@ -7,29 +7,29 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/balabanovds/otus-algo/tests"
-
 	pow "github.com/balabanovds/otus-algo/hw03/3.Power"
+
+	"github.com/balabanovds/otus-algo/tests"
 )
 
-type binaryPowTest struct{}
+type seqPowTest struct{}
 
-func (b *binaryPowTest) Name() string {
-	return "BinaryPow"
+func (s *seqPowTest) Name() string {
+	return "SequencePower"
 }
 
-func (b *binaryPowTest) Run(data []string) (string, error) {
+func (s *seqPowTest) Run(data []string) (string, error) {
 	x, n, err := parseIn(data)
 	if err != nil {
 		return "", err
 	}
 
-	result := pow.BinaryPow(x, n)
+	result := pow.SeqPow(x, n)
 
-	return fmt.Sprintf("%.06f", result), nil
+	return fmt.Sprintf("%.011f", result), nil
 }
 
-func TestBinaryPow(t *testing.T) {
+func TestSeqPow(t *testing.T) {
 	cmp := func(a, b string) bool {
 		af, _ := strconv.ParseFloat(a, 64)
 		bf, _ := strconv.ParseFloat(b, 64)
@@ -37,5 +37,5 @@ func TestBinaryPow(t *testing.T) {
 
 		return math.Floor(af*div)/div == math.Floor(bf*div)/div
 	}
-	tests.RunTests(t, &binaryPowTest{}, filepath.Dir("."), cmp)
+	tests.RunTests(t, &seqPowTest{}, filepath.Dir("."), cmp)
 }

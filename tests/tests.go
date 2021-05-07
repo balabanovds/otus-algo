@@ -15,7 +15,9 @@ type TestRunner interface {
 	Run([]string) (string, error)
 }
 
-func RunTests(t *testing.T, runner TestRunner, path string) {
+type cmpFunc func(a, b string) bool
+
+func RunTests(t *testing.T, runner TestRunner, path string, cmp cmpFunc) {
 	var inFiles []string
 	var outFiles []string
 
@@ -37,12 +39,12 @@ func RunTests(t *testing.T, runner TestRunner, path string) {
 	for i := range inFiles {
 		i := i
 		t.Run(runner.Name()+"-"+strconv.Itoa(i), func(t *testing.T) {
-			runTest(t, runner, inFiles[i], outFiles[i])
+			runTest(t, runner, inFiles[i], outFiles[i], cmp)
 		})
 	}
 }
 
-func runTest(t *testing.T, runner TestRunner, inFile string, outFile string) {
+func runTest(t *testing.T, runner TestRunner, inFile string, outFile string, cmp cmpFunc) {
 	inRaw, err := ioutil.ReadFile(inFile)
 	FatalOnErr(t, err)
 
@@ -58,7 +60,7 @@ func runTest(t *testing.T, runner TestRunner, inFile string, outFile string) {
 	t1 := time.Since(t0)
 	t.Logf("execution duration: %s\n", t1)
 
-	if want != got {
+	if !cmp(want, got) {
 		t.Errorf("FATAL: want: %q, got: %q", want, got)
 		t.Logf("inFile: %s, outFile: %s\n", inFile, outFile)
 	}
