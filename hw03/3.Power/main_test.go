@@ -8,7 +8,7 @@ import (
 )
 
 func TestPow(t *testing.T) {
-	s := tests.NewSuite(t, "Power", &seqPowTest{}, &binaryPowTest{})
+	s := tests.NewSuite(t, "Power", &seqPowTest{}, &multiPowTest{}, &binaryPowTest{})
 	s.Run(filepath.Dir("."))
 	s.ReportFile("power_report.txt")
 }
