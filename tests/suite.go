@@ -26,7 +26,6 @@ type Suite struct {
 }
 
 type testResult struct {
-	name     string
 	n        int
 	result   string
 	duration time.Duration
@@ -58,7 +57,6 @@ func (s *Suite) Run(path string) {
 			t.Run(runner.Name()+"-"+strconv.Itoa(i), func(t *testing.T) {
 				got, dur := runTest(t, runner, inFiles[i], outFiles[i])
 				s.results[runner.Name()] = append(s.results[runner.Name()], testResult{
-					name:     runner.Name(),
 					n:        runner.N(),
 					result:   got,
 					duration: dur,
@@ -76,7 +74,7 @@ func (s *Suite) ReportStdout() {
 func (s *Suite) ReportFile(filename string) {
 	f, err := os.OpenFile(filename, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0o755)
 	FatalOnErr(s.t, err)
-	defer f.Close()
+	defer func() { _ = f.Close() }()
 
 	s.report(f)
 }
@@ -91,7 +89,7 @@ func (s *Suite) report(out io.Writer) {
 	})
 
 	twr := tabwriter.NewWriter(out, 5, 3, 2, ' ', tabwriter.AlignRight)
-	row := []string{"RESULTS:"}
+	row := []string{"N:"}
 	for _, k := range keys {
 		row = append(row, strconv.Itoa(k))
 	}

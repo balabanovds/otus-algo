@@ -41,6 +41,6 @@ func run(data []string, runF func(x float64, n int) float64) (result string, n i
 
 	res := runF(x, n)
 
-	result = fmt.Sprintf("%.06f", res)
+	result = fmt.Sprintf("%.011f", res)
 	return
 }
