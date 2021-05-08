@@ -20,7 +20,10 @@ func (*stringTest) Name() string {
 	return "StringLength"
 }
 
+func (*stringTest) Cmp() tests.CmpFunc {
+	return func(a, b string) bool { return a == b }
+}
+
 func TestString(t *testing.T) {
-	cmp := func(a, b string) bool { return a == b }
-	tests.RunTests(t, &stringTest{}, filepath.Dir("."), cmp)
+	tests.RunTests(t, &stringTest{}, filepath.Dir("."))
 }
