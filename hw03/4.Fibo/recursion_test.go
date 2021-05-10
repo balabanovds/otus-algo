@@ -3,7 +3,6 @@ package fibo_test
 import (
 	"os"
 	"path/filepath"
-	"testing"
 
 	fibo "github.com/balabanovds/otus-algo/hw03/4.Fibo"
 	"github.com/balabanovds/otus-algo/tests"
@@ -40,10 +39,4 @@ func (r *recursionFiboTest) Path() string {
 
 func (r *recursionFiboTest) N() int {
 	return r.n
-}
-
-func TestRecursionFibo(t *testing.T) {
-	cwd, err := os.Getwd()
-	tests.FatalOnErr(t, err)
-	tests.RunTests(t, &recursionFiboTest{}, filepath.Join(cwd, "recursion_data"))
 }

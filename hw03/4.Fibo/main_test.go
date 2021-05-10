@@ -7,6 +7,6 @@ import (
 )
 
 func TestFibo(t *testing.T) {
-	s := tests.NewSuite(t, "FiboTests", &recursionFiboTest{})
-	s.Run().ReportFile("_report_fibo.txt")
+	s := tests.NewSuite(t, "FiboTests", &recursionFiboTest{}, &iterationFiboTest{})
+	s.Run().ReportFile("_report.txt")
 }

@@ -99,19 +99,16 @@ func (s *Suite) report(out io.Writer) {
 		row = append(row, strconv.Itoa(k))
 	}
 	_, err := fmt.Fprintln(twr, strings.Join(row, "\t")+"\t")
-
 	FatalOnErr(s.t, err)
 
 	for name, testResults := range s.results {
-		row1 := []string{name + " - got"}
-		row2 := []string{name + " - dur"}
+		row := []string{name}
 		for _, res := range testResults {
-			row1 = append(row1, res.result)
-			row2 = append(row2, res.duration.String())
+			row = append(row, res.duration.String())
 		}
-		_, err := fmt.Fprintln(twr, strings.Join(row1, "\t")+"\t")
-		FatalOnErr(s.t, err)
-		_, err = fmt.Fprintln(twr, strings.Join(row2, "\t")+"\t")
+
+		tail := strings.Repeat("\tX", len(keys)-len(testResults)) + "\t"
+		_, err = fmt.Fprintln(twr, strings.Join(row, "\t")+tail)
 		FatalOnErr(s.t, err)
 	}
 	FatalOnErr(s.t, twr.Flush())

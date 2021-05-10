@@ -8,5 +8,5 @@ import (
 
 func TestPow(t *testing.T) {
 	s := tests.NewSuite(t, "Power", &seqPowTest{}, &multiPowTest{}, &binaryPowTest{})
-	s.Run().ReportFile("_report_power.txt")
+	s.Run().ReportFile("_report.txt")
 }

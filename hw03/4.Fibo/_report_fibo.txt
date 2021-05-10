@@ -1,3 +1,0 @@
-                   N:       0        1        2        3        4        5        10
-  RecursionFibo - got       0        1        1        2        3        5        55
-  RecursionFibo - dur  7.37µs  8.187µs  9.144µs  3.255µs  3.859µs  3.384µs  22.454µs
