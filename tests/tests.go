@@ -11,8 +11,11 @@ import (
 )
 
 type TestRunner interface {
+	// Name of runner
 	Name() string
+	// Run main runner of test
 	Run([]string) (string, error)
+	// Cmp must return function that compares received result with wanted
 	Cmp() CmpFunc
 }
 

@@ -14,6 +14,8 @@ import (
 
 type SuiteTestRunner interface {
 	TestRunner
+	// Path where your test data is
+	Path() string
 	N() int
 }
 
@@ -41,16 +43,17 @@ func NewSuite(t *testing.T, name string, runners ...SuiteTestRunner) *Suite {
 	}
 }
 
-func (s *Suite) AddRunner(runner SuiteTestRunner) {
+func (s *Suite) AddRunner(runner SuiteTestRunner) *Suite {
 	s.runners = append(s.runners, runner)
+	return s
 }
 
 // Run all TestRunners regarding to files *.in, *.out in dir.
-func (s *Suite) Run(path string) {
+func (s *Suite) Run() *Suite {
 	t := s.t
-	inFiles, outFiles := findFilesInDir(t, path)
 
 	for _, runner := range s.runners {
+		inFiles, outFiles := findFilesInDir(t, runner.Path())
 		for i := range inFiles {
 			i := i
 			runner := runner
@@ -65,6 +68,8 @@ func (s *Suite) Run(path string) {
 			})
 		}
 	}
+
+	return s
 }
 
 func (s *Suite) ReportStdout() {

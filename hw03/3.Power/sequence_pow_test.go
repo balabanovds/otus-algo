@@ -1,6 +1,8 @@
 package pow_test
 
 import (
+	"path/filepath"
+
 	pow "github.com/balabanovds/otus-algo/hw03/3.Power"
 
 	"github.com/balabanovds/otus-algo/tests"
@@ -27,6 +29,10 @@ func (s *seqPowTest) Run(data []string) (string, error) {
 
 func (s *seqPowTest) Cmp() tests.CmpFunc {
 	return cmp()
+}
+
+func (b *seqPowTest) Path() string {
+	return filepath.Dir(".")
 }
 
 func (s *seqPowTest) N() int {

@@ -1,6 +1,8 @@
 package pow_test
 
 import (
+	"path/filepath"
+
 	"github.com/balabanovds/otus-algo/tests"
 
 	pow "github.com/balabanovds/otus-algo/hw03/3.Power"
@@ -27,6 +29,10 @@ func (b *binaryPowTest) Run(data []string) (string, error) {
 
 func (b *binaryPowTest) Cmp() tests.CmpFunc {
 	return cmp()
+}
+
+func (b *binaryPowTest) Path() string {
+	return filepath.Dir(".")
 }
 
 func (b *binaryPowTest) N() int {
