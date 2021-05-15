@@ -1,8 +1,8 @@
 package tests
 
 import (
-	"io/fs"
 	"io/ioutil"
+	"os"
 	"path/filepath"
 	"strconv"
 	"strings"
@@ -66,7 +66,7 @@ func sanitizeClr(in []string) []string {
 }
 
 func findFilesInDir(t *testing.T, path string) (inFiles []string, outFiles []string) {
-	err := filepath.Walk(path, func(path string, info fs.FileInfo, err error) error {
+	err := filepath.Walk(path, func(path string, info os.FileInfo, err error) error {
 		if info.IsDir() {
 			return nil
 		}

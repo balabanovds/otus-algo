@@ -1,0 +1,4 @@
+                   N:        1      2      3      4      5     10       100        1000         10000         100000
+     SimpleBruteForce  4.748µs  402ns  517ns  374ns  359ns  319ns  14.475µs  1.509902ms  155.541752ms  14.611404728s
+  ImmidiateBruteForce    764ns  276ns  154ns  152ns  175ns  222ns   3.739µs   221.055µs   17.389132ms   1.294276002s
+       HalfBruteForce    908ns  185ns  178ns  190ns  196ns  197ns   2.431µs   115.401µs    8.518651ms   676.028065ms
