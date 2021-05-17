@@ -9,11 +9,16 @@ import (
 )
 
 type recursionFiboTest struct {
-	n int
+	amount int
+	n      int
+}
+
+func newRecursionTest(amount int) *recursionFiboTest {
+	return &recursionFiboTest{amount: amount}
 }
 
 func (r *recursionFiboTest) Name() string {
-	return "RecursionFibo"
+	return "01-RecursionFibo"
 }
 
 func (r *recursionFiboTest) Run(data []string) (string, error) {
@@ -32,9 +37,13 @@ func (r *recursionFiboTest) Cmp() tests.CmpFunc {
 	}
 }
 
+func (r *recursionFiboTest) Amount() int {
+	return r.amount
+}
+
 func (r *recursionFiboTest) Path() string {
 	cwd, _ := os.Getwd()
-	return filepath.Join(cwd, "recursion_data")
+	return filepath.Join(cwd, "test_data")
 }
 
 func (r *recursionFiboTest) N() int {

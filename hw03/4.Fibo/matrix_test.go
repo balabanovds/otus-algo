@@ -10,11 +10,16 @@ import (
 )
 
 type matrixFiboTest struct {
-	n int
+	amount int
+	n      int
+}
+
+func newMatrixTest(amount int) *matrixFiboTest {
+	return &matrixFiboTest{amount: amount}
 }
 
 func (m *matrixFiboTest) Name() string {
-	return "MatrixFibo"
+	return "04-MatrixFibo"
 }
 
 func (m *matrixFiboTest) Run(data []string) (string, error) {
@@ -39,9 +44,13 @@ func (m *matrixFiboTest) Cmp() tests.CmpFunc {
 	}
 }
 
+func (m *matrixFiboTest) Amount() int {
+	return m.amount
+}
+
 func (m *matrixFiboTest) Path() string {
 	cwd, _ := os.Getwd()
-	return filepath.Join(cwd, "matrix_data")
+	return filepath.Join(cwd, "test_data")
 }
 
 func (m *matrixFiboTest) N() int {

@@ -1,48 +1,114 @@
 package primes_test
 
 import (
-	"os"
-	"path/filepath"
-	"strconv"
-
-	"github.com/balabanovds/otus-algo/tests"
+	primes "github.com/balabanovds/otus-algo/hw03/5.Primes"
 )
 
-type primesBase struct {
-	n int
+type simpleBruteForce struct {
+	amount int
+	baseTest
 }
 
-func (s *primesBase) Name() string {
-	return "SimpleBruteForce"
+func newSimpleTest(amount int) *simpleBruteForce {
+	s := simpleBruteForce{amount: amount}
+	s.setAmount(amount)
+	return &s
 }
 
-func (s *primesBase) Run(_ []string) (string, error) {
-	panic("implement me!")
+func (s *simpleBruteForce) Name() string {
+	return "01-SimpleBruteForce"
 }
 
-func (s *primesBase) Cmp() tests.CmpFunc {
-	return func(a, b string) bool {
-		return a == b
-	}
+func (s *simpleBruteForce) Run(data []string) (string, error) {
+	return s.run(data, primes.SimpleBruteForce)
 }
 
-func (s *primesBase) Path() string {
-	cwd, _ := os.Getwd()
-	return filepath.Join(cwd, "bf_data")
+type immidiatePrimesTest struct {
+	baseTest
 }
 
-func (s *primesBase) N() int {
-	return s.n
+func newImmidTest(amount int) *immidiatePrimesTest {
+	s := immidiatePrimesTest{}
+	s.setAmount(amount)
+	return &s
 }
 
-func (s *primesBase) run(data []string, f func(int) int) (string, error) {
-	n, err := strconv.Atoi(data[0])
-	if err != nil {
-		return "", err
-	}
+func (s *immidiatePrimesTest) Name() string {
+	return "02-ImmidiateBruteForce"
+}
 
-	res := f(n)
-	s.n = n
+func (s *immidiatePrimesTest) Run(data []string) (string, error) {
+	return s.run(data, primes.ImmidiateBruteForce)
+}
 
-	return strconv.Itoa(res), nil
+type halfPrimesTest struct {
+	baseTest
+}
+
+func newHalfPrimesTest(amount int) *halfPrimesTest {
+	s := halfPrimesTest{}
+	s.setAmount(amount)
+	return &s
+}
+
+func (s *halfPrimesTest) Name() string {
+	return "03-HalfBruteForce"
+}
+
+func (s *halfPrimesTest) Run(data []string) (string, error) {
+	return s.run(data, primes.HalfBruteForce)
+}
+
+type sqrtPrimesTest struct {
+	baseTest
+}
+
+func newSqrtPrimesTest(amount int) *sqrtPrimesTest {
+	s := sqrtPrimesTest{}
+	s.setAmount(amount)
+	return &s
+}
+
+func (s *sqrtPrimesTest) Name() string {
+	return "04-SqrtBruteForce"
+}
+
+func (s *sqrtPrimesTest) Run(data []string) (string, error) {
+	return s.run(data, primes.SqrtBruteForce)
+}
+
+type oddPrimesTest struct {
+	baseTest
+}
+
+func newOddPrimesTest(amount int) *oddPrimesTest {
+	s := oddPrimesTest{}
+	s.setAmount(amount)
+	return &s
+}
+
+func (s *oddPrimesTest) Name() string {
+	return "05-OddBruteForce"
+}
+
+func (s *oddPrimesTest) Run(data []string) (string, error) {
+	return s.run(data, primes.OddBruteForce)
+}
+
+type memPrimesTest struct {
+	baseTest
+}
+
+func newMemPrimesTest(amount int) *memPrimesTest {
+	s := memPrimesTest{}
+	s.setAmount(amount)
+	return &s
+}
+
+func (s *memPrimesTest) Name() string {
+	return "06-MemoryPrimes"
+}
+
+func (s *memPrimesTest) Run(data []string) (string, error) {
+	return s.run(data, primes.MemoryPrimes)
 }

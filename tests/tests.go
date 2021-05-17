@@ -1,6 +1,8 @@
 package tests
 
 import (
+	"errors"
+	"fmt"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -27,13 +29,13 @@ func RunTests(t *testing.T, runner TestRunner, path string) {
 	for i := range inFiles {
 		i := i
 		t.Run(runner.Name()+"-"+strconv.Itoa(i), func(t *testing.T) {
-			runTest(t, runner, inFiles[i], outFiles[i])
+			_, _, _ = runTest(t, runner, inFiles[i], outFiles[i])
 		})
 	}
 }
 
 // runTest returns result of runner execution and duration of execution
-func runTest(t *testing.T, runner TestRunner, inFile string, outFile string) (string, time.Duration) {
+func runTest(t *testing.T, runner TestRunner, inFile string, outFile string) (string, time.Duration, error) {
 	input, want := getDataFromFiles(t, inFile, outFile)
 
 	t0 := time.Now()
@@ -43,12 +45,13 @@ func runTest(t *testing.T, runner TestRunner, inFile string, outFile string) (st
 	t.Logf("execution duration: %s\n", t1)
 
 	if !runner.Cmp()(want, got) {
-		t.Errorf("FATAL: want: %q, got: %q", want, got)
+		errMsg := fmt.Sprintf("want: %q, got: %q", want, got)
+		t.Errorf("FATAL: %s", errMsg)
 		t.Logf("inFile: %s, outFile: %s\n", inFile, outFile)
-		return "-", t1
+		return "", t1, errors.New(errMsg)
 	}
 
-	return got, t1
+	return got, t1, nil
 }
 
 func FatalOnErr(t *testing.T, err error) {

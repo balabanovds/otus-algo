@@ -7,6 +7,10 @@ import (
 )
 
 func TestPow(t *testing.T) {
-	s := tests.NewSuite(t, "Power", &seqPowTest{}, &multiPowTest{}, &binaryPowTest{})
+	s := tests.NewSuite(t, "Power",
+		newSeqTest(9),
+		newMultiTest(9),
+		newBinaryTest(9),
+	)
 	s.Run().ReportFile("_report.txt")
 }

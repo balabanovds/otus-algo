@@ -13,11 +13,16 @@ import (
 )
 
 type formulaFiboTest struct {
-	n int
+	amount int
+	n      int
+}
+
+func newFormulaTest(amount int) *formulaFiboTest {
+	return &formulaFiboTest{amount: amount}
 }
 
 func (f *formulaFiboTest) Name() string {
-	return "FormulaFibo"
+	return "03-FormulaFibo"
 }
 
 func (f *formulaFiboTest) Run(data []string) (string, error) {
@@ -51,9 +56,13 @@ func (f *formulaFiboTest) Cmp() tests.CmpFunc {
 	}
 }
 
+func (f *formulaFiboTest) Amount() int {
+	return f.amount
+}
+
 func (f *formulaFiboTest) Path() string {
 	cwd, _ := os.Getwd()
-	return filepath.Join(cwd, "formula_data")
+	return filepath.Join(cwd, "test_data")
 }
 
 func (f *formulaFiboTest) N() int {

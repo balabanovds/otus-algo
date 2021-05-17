@@ -10,11 +10,16 @@ import (
 )
 
 type iterationFiboTest struct {
-	n int
+	amount int
+	n      int
+}
+
+func newIterationTest(amount int) *iterationFiboTest {
+	return &iterationFiboTest{amount: amount}
 }
 
 func (i *iterationFiboTest) Name() string {
-	return "IterationFibo"
+	return "02-IterationFibo"
 }
 
 func (i *iterationFiboTest) Run(data []string) (string, error) {
@@ -33,9 +38,13 @@ func (i *iterationFiboTest) Cmp() tests.CmpFunc {
 	}
 }
 
+func (i *iterationFiboTest) Amount() int {
+	return i.amount
+}
+
 func (i *iterationFiboTest) Path() string {
 	cwd, _ := os.Getwd()
-	return filepath.Join(cwd, "iteration_data")
+	return filepath.Join(cwd, "test_data")
 }
 
 func (i *iterationFiboTest) N() int {

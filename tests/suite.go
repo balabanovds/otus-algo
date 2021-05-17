@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"path/filepath"
 	"sort"
 	"strconv"
 	"strings"
@@ -16,6 +17,8 @@ type SuiteTestRunner interface {
 	TestRunner
 	// Path where your test data is
 	Path() string
+	// Amount of test files to read
+	Amount() int
 	N() int
 }
 
@@ -31,6 +34,7 @@ type testResult struct {
 	n        int
 	result   string
 	duration time.Duration
+	err      error
 }
 
 func NewSuite(t *testing.T, name string, runners ...SuiteTestRunner) *Suite {
@@ -53,16 +57,18 @@ func (s *Suite) Run() *Suite {
 	t := s.t
 
 	for _, runner := range s.runners {
-		inFiles, outFiles := findFilesInDir(t, runner.Path())
-		for i := range inFiles {
+		for i := 0; i <= runner.Amount(); i++ {
 			i := i
 			runner := runner
+			inFile := filepath.Join(runner.Path(), fmt.Sprintf("test.%d.in", i))
+			outFile := filepath.Join(runner.Path(), fmt.Sprintf("test.%d.out", i))
 			t.Run(runner.Name()+"-"+strconv.Itoa(i), func(t *testing.T) {
-				got, dur := runTest(t, runner, inFiles[i], outFiles[i])
+				got, dur, err := runTest(t, runner, inFile, outFile)
 				s.results[runner.Name()] = append(s.results[runner.Name()], testResult{
 					n:        runner.N(),
 					result:   got,
 					duration: dur,
+					err:      err,
 				})
 				s.ns[runner.N()] = struct{}{}
 			})
@@ -101,13 +107,26 @@ func (s *Suite) report(out io.Writer) {
 	_, err := fmt.Fprintln(twr, strings.Join(row, "\t")+"\t")
 	FatalOnErr(s.t, err)
 
-	for name, testResults := range s.results {
+	sortedNames := make([]string, 0, len(s.results))
+	for name := range s.results {
+		sortedNames = append(sortedNames, name)
+	}
+	sort.SliceStable(sortedNames, func(i, j int) bool {
+		return sortedNames[i] < sortedNames[j]
+	})
+
+	for _, name := range sortedNames {
+		testResults := s.results[name]
 		row := []string{name}
 		for _, res := range testResults {
-			row = append(row, res.duration.String())
+			if res.err != nil {
+				row = append(row, "ERR")
+			} else {
+				row = append(row, res.duration.String())
+			}
 		}
 
-		tail := strings.Repeat("\tX", len(keys)-len(testResults)) + "\t"
+		tail := strings.Repeat("\t∞", len(keys)-len(testResults)) + "\t"
 		_, err = fmt.Fprintln(twr, strings.Join(row, "\t")+tail)
 		FatalOnErr(s.t, err)
 	}

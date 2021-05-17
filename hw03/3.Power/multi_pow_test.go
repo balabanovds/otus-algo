@@ -1,39 +1,23 @@
 package pow_test
 
 import (
-	"path/filepath"
-
 	pow "github.com/balabanovds/otus-algo/hw03/3.Power"
-	"github.com/balabanovds/otus-algo/tests"
 )
 
 type multiPowTest struct {
-	n int
+	baseTest
+}
+
+func newMultiTest(amount int) *multiPowTest {
+	t := &multiPowTest{}
+	t.setAmount(amount)
+	return t
 }
 
 func (m *multiPowTest) Name() string {
-	return "MultiPow"
+	return "02-MultiPow"
 }
 
 func (m *multiPowTest) Run(data []string) (string, error) {
-	result, n, err := run(data, pow.MultiPow)
-	if err != nil {
-		return "", err
-	}
-
-	m.n = n
-
-	return result, nil
-}
-
-func (m *multiPowTest) Cmp() tests.CmpFunc {
-	return cmp()
-}
-
-func (b *multiPowTest) Path() string {
-	return filepath.Dir(".")
-}
-
-func (m *multiPowTest) N() int {
-	return m.n
+	return m.run(data, pow.MultiPow)
 }

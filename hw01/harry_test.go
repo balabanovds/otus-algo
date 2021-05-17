@@ -1,8 +1,8 @@
 package hw01
 
 import (
+	"io/ioutil"
 	"math"
-	"os"
 	"path"
 	"reflect"
 	"strings"
@@ -181,7 +181,7 @@ func TestHarry(t *testing.T) {
 				if x == 0 && y == 0 {
 					return false
 				}
-				return ((y < 2) || (x < 2))
+				return (y < 2) || (x < 2)
 			},
 		},
 		{
@@ -235,9 +235,9 @@ func TestHarry(t *testing.T) {
 			want := strings.Fields(readFile(t, tt.filename))
 			if !reflect.DeepEqual(want, got) {
 				t.Log("WANT")
-				print(t, want)
+				printData(t, want)
 				t.Log("GOT")
-				print(t, got)
+				printData(t, got)
 				t.Fatal("not equal")
 			}
 		})
@@ -246,13 +246,13 @@ func TestHarry(t *testing.T) {
 
 func readFile(t *testing.T, filename string) string {
 	t.Helper()
-	b, err := os.ReadFile(path.Join("data", filename))
+	b, err := ioutil.ReadFile(path.Join("data", filename))
 	fatalErr(t, err)
 
 	return string(b)
 }
 
-func print(t *testing.T, data []string) {
+func printData(t *testing.T, data []string) {
 	t.Helper()
 
 	var sb strings.Builder

@@ -1,4 +1,7 @@
-                   N:        1      2      3      4      5     10       100        1000         10000         100000
-     SimpleBruteForce  4.748µs  402ns  517ns  374ns  359ns  319ns  14.475µs  1.509902ms  155.541752ms  14.611404728s
-  ImmidiateBruteForce    764ns  276ns  154ns  152ns  175ns  222ns   3.739µs   221.055µs   17.389132ms   1.294276002s
-       HalfBruteForce    908ns  185ns  178ns  190ns  196ns  197ns   2.431µs   115.401µs    8.518651ms   676.028065ms
+                      N:        1      2      3      4      5     10       100        1000         10000        100000       1000000      10000000      100000000
+     01-SimpleBruteForce  12.99µs  782ns  905ns  942ns  996ns  973ns  29.053µs  2.903724ms  149.717688ms             ∞             ∞             ∞              ∞
+  02-ImmidiateBruteForce    565ns  190ns  218ns  202ns  191ns  206ns   3.897µs    220.72µs   16.350009ms  1.221004935s             ∞             ∞              ∞
+       03-HalfBruteForce    583ns  233ns  201ns  226ns  251ns  223ns   2.468µs   115.301µs    8.903687ms  597.048976ms             ∞             ∞              ∞
+       04-SqrtBruteForce    569ns  200ns  226ns  208ns  213ns  220ns   1.572µs    51.877µs     373.755µs    7.448081ms  190.077018ms  4.594890964s              ∞
+        05-OddBruteForce    730ns  194ns  205ns  437ns  227ns  188ns   1.173µs    11.796µs     223.537µs    3.698029ms   96.547063ms  2.292916107s              ∞
+         06-MemoryPrimes    815ns  199ns  189ns  299ns  356ns  344ns   1.772µs    12.389µs     185.033µs    3.083672ms   45.700857ms  827.659799ms  16.787990571s
