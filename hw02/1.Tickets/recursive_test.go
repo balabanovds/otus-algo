@@ -31,6 +31,10 @@ func (r *recursiveTest) Run(input []string) (string, error) {
 	return strconv.Itoa(int(r.ticketsQuantity)), nil
 }
 
+func (r *recursiveTest) Cmp() tests.CmpFunc {
+	return func(a, b string) bool { return a == b }
+}
+
 func (r *recursiveTest) nextDigit(digit int, sum1 int, sum2 int) {
 	if digit == r.digitsNum {
 		if sum1 == sum2 {
