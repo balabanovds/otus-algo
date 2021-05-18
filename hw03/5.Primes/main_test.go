@@ -14,6 +14,8 @@ func TestPrimes(t *testing.T) {
 		newSqrtPrimesTest(11),
 		newOddPrimesTest(11),
 		newMemPrimesTest(12),
+		newEratosphenTest(14),
+		newEratosphenLinearTest(10),
 	)
 
 	s.Run().ReportFile("_report.txt")
