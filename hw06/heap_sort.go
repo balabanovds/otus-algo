@@ -2,7 +2,7 @@ package sort
 
 func HeapSort(arr []int) {
 	size := len(arr)
-	for root := (size - 1) / 2; root >= 0; root-- {
+	for root := size/2 - 1; root >= 0; root-- {
 		maxToRoot(arr, root, size)
 	}
 
