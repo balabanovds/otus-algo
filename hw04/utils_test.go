@@ -17,7 +17,7 @@ func run(data []string, runF func(int) (int, uint64)) (string, error) {
 	}
 
 	cntr, bMoves := runF(pos)
-	return fmt.Sprintf("%d\r\n%d", cntr, bMoves), nil
+	return fmt.Sprintf("%d\n%d", cntr, bMoves), nil
 }
 
 func cmp() tests.CmpFunc {
